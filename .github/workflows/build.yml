@@ -30,7 +30,7 @@ jobs:
           sudo apt install -y python3-pip build-essential ccache libncurses5 libssl-dev
           sudo apt install -y zlib1g-dev
           python -m pip install --upgrade pip
-          pip install buildozer cython  # تثبيت Cython أيضًا
+          pip install buildozer cython
 
       # 4. تثبيت Java و Aidl و Android SDK
       - name: Install Java and Android SDK
@@ -40,19 +40,23 @@ jobs:
           wget https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip
           unzip commandlinetools-linux-8092744_latest.zip -d $HOME/android-sdk
           mv $HOME/android-sdk/cmdline-tools $HOME/android-sdk/cmdline-tools-older  # تغيير الاسم لتجنب تعارض المسار
-          mkdir -p $HOME/android-sdk/cmdline-tools/latest  # إنشاء مجلد الجديد
+          mkdir -p $HOME/android-sdk/cmdline-tools/latest  # إنشاء مجلد جديد
           mv $HOME/android-sdk/cmdline-tools-older/* $HOME/android-sdk/cmdline-tools/latest/  # نقل المحتويات
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses  # قبول تراخيص SDK
           $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;35.0.0" "platform-tools" "platforms;android-30"
           # تثبيت Aidl
           sudo apt-get install -y aidl
 
-      # 5. بناء APK باستخدام Buildozer
+      # 5. إعداد متغير البيئة لـ Android SDK
+      - name: Set Android SDK environment variable
+        run: echo "ANDROID_SDK_ROOT=$HOME/android-sdk" >> $GITHUB_ENV
+
+      # 6. بناء APK باستخدام Buildozer
       - name: Build APK
         run: |
           buildozer android debug
 
-      # 6. حفظ الـ APK كـ artefact باستخدام الإصدار الجديد
+      # 7. حفظ الـ APK كـ artefact باستخدام الإصدار الجديد
       - name: Upload APK as artifact
         uses: actions/upload-artifact@v3
         with:
