@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. تحقق من الكود
+      # 1. التحقق من الكود
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -42,9 +42,9 @@ jobs:
         run: |
           buildozer android debug
 
-      # 6. حفظ الـ APK كـ artefact
+      # 6. حفظ الـ APK كـ artefact باستخدام الإصدار الجديد
       - name: Upload APK as artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: apk
           path: bin/*.apk
