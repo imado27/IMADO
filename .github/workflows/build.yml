@@ -39,7 +39,9 @@ jobs:
           # تثبيت Android SDK
           wget https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip
           unzip commandlinetools-linux-8092744_latest.zip -d $HOME/android-sdk
-          mv $HOME/android-sdk/cmdline-tools $HOME/android-sdk/cmdline-tools/latest  # نقل الملفات إلى المسار الصحيح
+          mv $HOME/android-sdk/cmdline-tools $HOME/android-sdk/cmdline-tools-older  # تغيير الاسم لتجنب تعارض المسار
+          mkdir -p $HOME/android-sdk/cmdline-tools/latest  # إنشاء مجلد الجديد
+          mv $HOME/android-sdk/cmdline-tools-older/* $HOME/android-sdk/cmdline-tools/latest/  # نقل المحتويات
           yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses  # قبول تراخيص SDK
           $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;35.0.0" "platform-tools" "platforms;android-30"
           # تثبيت Aidl
