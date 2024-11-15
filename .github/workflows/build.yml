@@ -39,8 +39,9 @@ jobs:
           # تثبيت Android SDK
           wget https://dl.google.com/android/repository/commandlinetools-linux-8092744_latest.zip
           unzip commandlinetools-linux-8092744_latest.zip -d $HOME/android-sdk
-          yes | $HOME/android-sdk/cmdline-tools/bin/sdkmanager --licenses  # قبول تراخيص SDK
-          $HOME/android-sdk/cmdline-tools/bin/sdkmanager "build-tools;35.0.0" "platform-tools" "platforms;android-30"
+          mv $HOME/android-sdk/cmdline-tools $HOME/android-sdk/cmdline-tools/latest  # نقل الملفات إلى المسار الصحيح
+          yes | $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager --licenses  # قبول تراخيص SDK
+          $HOME/android-sdk/cmdline-tools/latest/bin/sdkmanager "build-tools;35.0.0" "platform-tools" "platforms;android-30"
           # تثبيت Aidl
           sudo apt-get install -y aidl
 
